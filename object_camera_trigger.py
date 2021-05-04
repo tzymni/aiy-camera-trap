@@ -14,12 +14,22 @@
 # limitations under the License.
 """Trigger PiCamera when face is detected."""
 import time
+import yaml
 from aiy.vision.inference import CameraInference
 from aiy.vision.models import object_detection
 from picamera import PiCamera
 from email_sender import EmailSender
 
+def LoadConfig():
+    global config
+
+    with open("config.yaml", "r") as yamlfile:
+        config = yaml.load(yamlfile, Loader=yaml.FullLoader)
+
+
 def main():
+
+    LoadConfig()
     with PiCamera() as camera:
         # Configure camera
         camera.resolution = (1640, 922)  # Full Frame, 16:9 (Camera v2)
@@ -29,11 +39,11 @@ def main():
         with CameraInference(object_detection.model()) as inference:
             for result in inference.run():
                 if len(object_detection.get_objects(result)) >= 1:
-                    camera.capture('catched.jpg')
+                    camera.capture(config['aiy']['photo_title'])
                     obj = EmailSender()
                     print("Found object! Send email...")
-                    obj.SendMail('catched.jpg')
-                    time.sleep(60)
+                    obj.SendMail(config['aiy']['photo_title'])
+                    time.sleep(config['aiy']['time_between_emails'])
 
         # Stop preview
         camera.stop_preview()
