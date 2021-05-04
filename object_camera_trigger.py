@@ -32,7 +32,9 @@ def main():
             for result in inference.run():
                 if len(object_detection.get_objects(result)) >= 1:
                     camera.capture('catched.jpg')
-                    EmailSender.SendMail(EmailSender, 'catched.jpg')
+                    obj = EmailSender()
+                    obj.SendMail('catched.jpg')
+
                     break
 
         # Stop preview
