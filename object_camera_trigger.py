@@ -19,6 +19,7 @@ from aiy.vision.models import object_detection
 
 from picamera import PiCamera
 
+from email_sender import EmailSender
 
 def main():
     with PiCamera() as camera:
@@ -31,6 +32,7 @@ def main():
             for result in inference.run():
                 if len(object_detection.get_objects(result)) >= 1:
                     camera.capture('catched.jpg')
+                    EmailSender.SendMail(EmailSender, 'catched.jpg')
                     break
 
         # Stop preview

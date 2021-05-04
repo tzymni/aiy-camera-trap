@@ -1,0 +1,11 @@
+smtp:
+    host:
+    port:
+    user:
+    password:
+
+email:
+    from:
+    to:
+    subject: PhotoTrap
+    message: This is photo from your phototrap!
