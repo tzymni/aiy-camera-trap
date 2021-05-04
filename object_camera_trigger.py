@@ -13,12 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Trigger PiCamera when face is detected."""
-
+import time
 from aiy.vision.inference import CameraInference
 from aiy.vision.models import object_detection
-
 from picamera import PiCamera
-
 from email_sender import EmailSender
 
 def main():
@@ -33,9 +31,9 @@ def main():
                 if len(object_detection.get_objects(result)) >= 1:
                     camera.capture('catched.jpg')
                     obj = EmailSender()
+                    print("Found object! Send email...")
                     obj.SendMail('catched.jpg')
-
-                    break
+                    time.sleep(60)
 
         # Stop preview
         camera.stop_preview()
