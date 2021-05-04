@@ -9,3 +9,7 @@ email:
     to:
     subject: PhotoTrap
     message: This is photo from your phototrap!
+aiy:
+    # time in seconds
+    time_between_emails: 60
+    photo_title: catched.jpg
