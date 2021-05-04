@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+#
+# Class to send email.
+# @author Tomasz Zymni <tomasz.zymni@gmail.com>
+#
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -8,7 +12,7 @@ from email.mime.multipart import MIMEMultipart
 
 import yaml
 
-
+# Load configuration from yaml file.
 def LoadConfig():
     global config
 
@@ -21,6 +25,7 @@ class EmailSender:
     def __init__(self):
         LoadConfig()
 
+    # Send email based on configuration with file attached in parameter.
     def SendMail(self, ImgFileName):
         img_data = open(ImgFileName, 'rb').read()
         msg = MIMEMultipart()
